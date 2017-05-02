@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <math.h>
 
 
 typedef unsigned  char Byte;
@@ -46,19 +47,18 @@ int main(int argc,  const char * argv[]) {
 		length = strlen((char*)txtFile);
 		
 			//don't really need this to print
+		/*
 		for (int a = 0; a < length; a++)
 		{
 			printf("%c", *(txtFile + a));
 		}
+		 */
 		
 		readFile(txtFile, output, length, argv[2]);
 		
 		fclose(fp);
 		fclose(output);
 	}
-	
-	
-	
 	
 	free(txtFile);
 	
@@ -71,29 +71,23 @@ int main(int argc,  const char * argv[]) {
 	 unsigned int mask = 1 << 31;
 	 //unsigned char mask = 0x80;
 	 unsigned int c;
-	 Byte storeBytes[length];
-	 unsigned int num = 0;
-	 Byte result;
 	
 	 for (int a = 0; a < length; a++)
 	 {
 		
 		 c = *(txtFile + a) << 24;
-		 
-		 for (int i = 0; i < 8; i++)
+		
+		for (int i = 0; i < 8; i++)
 		 {
-			 
-			 num = putchar( c & mask ? '1' : '0');
-			 storeBytes[a] = num;
-			 c <<= 1;
-			 
-		 }
+			putchar( c & mask ? '1' : '0');
+			c <<= 1;
+		}
 		 puts("");
+	}
+	
+	 for (int a = 0; a < length; a++)
+	 {
+		 fprintf(output, "%c", ~( *(txtFile + a) * (int)pow(2, 2) ) );
 	 }
-	 
-	 for (int m = 0; m < length; m++) {
-		 
-	 }
-	 
 }
 
