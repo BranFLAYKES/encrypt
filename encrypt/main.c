@@ -69,9 +69,13 @@ int main(int argc,  const char * argv[]) {
  {
 	
 	 unsigned int mask = 1 << 31;
-	 //unsigned char mask = 0x80;
 	 unsigned int c;
-	
+	 unsigned int x;
+	 Byte storeBinary[length];
+	 Byte complement[length];
+	 Byte result;
+	 
+		//print characters in binary
 	 for (int a = 0; a < length; a++)
 	 {
 		
@@ -79,15 +83,30 @@ int main(int argc,  const char * argv[]) {
 		
 		for (int i = 0; i < 8; i++)
 		 {
-			putchar( c & mask ? '1' : '0');
+			storeBinary[a] = putchar( c & mask ? '1' : '0');
 			c <<= 1;
 		}
 		 puts("");
 	}
-	
+
+	 
 	 for (int a = 0; a < length; a++)
 	 {
-		 fprintf(output, "%c", ~( *(txtFile + a) * (int)pow(2, 2) ) );
+		 result = *(txtFile + a) * (unsigned int)pow(2, 2) ;
+		 fprintf(output, "%c", ~( *(txtFile + a) * (unsigned int)pow(2, 2) ) );
+	 }
+	 puts("\n\n\n\n\n\n");
+	 
+	  //print complement of binary^
+	 for (int a = 0; a < length; a++)
+	 {
+		 
+		 for (int i = 0; i < 8; i++)
+		 {
+			 complement[a] = putchar(~storeBinary[i]);
+		 }
+		 puts("");
 	 }
 }
+
 
