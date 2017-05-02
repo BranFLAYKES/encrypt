@@ -8,45 +8,80 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <strings.h>
 
+typedef unsigned  char Byte;
+
+void readFile(Byte* txtFile, FILE * output, unsigned long length,  const char * a);
 
 int main(int argc,  const char * argv[]) {
 	
-	FILE * fp;
-	fp = fopen("hamlet.txt", "r+");
-	
+	FILE * fp = NULL;
+	FILE * output = NULL;
+	Byte * txtFile = (Byte*)malloc(sizeof(Byte));
+	int i = 0;
+	unsigned long length = 0;
 	
 	if (argc > 1)
 	{
-		
-		if (fp == NULL)
+		fp = fopen(argv[1], "r+");
+		output = fopen(argv[2], "w+");
+	 
+		if (output == NULL || fp == NULL)
 		{
 			puts("File failed to open!");
 			exit(1);
 		}
 		
-		char * txtFile = (char*)malloc(sizeof(char));
-		int i = 0;
-		
-		while (!feof(fp))
+		while ( !feof(fp))
 		{
-			fgets(txtFile, sizeof(fp), fp);
-			*(txtFile + i) = fputs(txtFile, fp);
-			printf("%c", *(txtFile) );
+		
+			*(txtFile + i) = fgetc(fp);
+			i++;
 		}
-		
-		
+	
 	}
 	
+	length = strlen((char*)txtFile);
+	for (int a = 0; a < length; a++) {
+		printf("%c", *(txtFile + a));
+	}
 	
+	readFile(txtFile, output, length, argv[2]);
+	
+	free(txtFile);
+	fclose(output);
+	fclose(fp);
 	return 0;
 }
-/*
- void readFile(char * txtFile, FILE * fp)
+
+ void readFile(Byte * txtFile, FILE * output, unsigned long length, const char * a)
  {
 	
-	for (int i = 0; i < sizeof(txtFile); i++) {
- fseek(fp, 8, SEEK_SET);
-	}
- }
- */
+	 unsigned int mask = 1 << 31;
+	 //unsigned char mask = 0x80;
+	 unsigned int c;
+	 unsigned char * storeBytes;
+	
+	 for (int a = 0; a < length; a++)
+	 {
+		
+		 c = *(txtFile + a) << 24;
+		 
+		 for (int i = 0; i < 8; i++)
+		 {
+			 storeBytes[a] = putchar( c & mask ? '1' : '0');
+			 c <<= 1;
+		 }
+		 
+		 
+		 
+		
+		 fprintf(output, "%s", storeBytes);
+		
+		 puts("\n\n");
+	 }
+	 
+	 
+}
+
