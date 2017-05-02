@@ -83,18 +83,43 @@ int main(int argc,  const char * argv[]) {
 		
 		for (int i = 0; i < 8; i++)
 		 {
-			storeBinary[a] = putchar( c & mask ? '1' : '0');
+			putchar( c & mask ? '1' : '0');
 			c <<= 1;
 		}
 		 puts("");
 	}
 
-	 
+		 //relocate bits
 	 for (int a = 0; a < length; a++)
 	 {
 		 result = *(txtFile + a) * (unsigned int)pow(2, 2) ;
-		 fprintf(output, "%c", ~( *(txtFile + a) * (unsigned int)pow(2, 2) ) );
-	 }
+			
+
+			 result = *(txtFile + a) << 24;
+			 
+			 for (int i = 0; i < 8; i++)
+			 {
+				 storeBinary[a] = putchar( result & mask ? '1' : '0');
+				 result <<= 1;
+			 }
+			 puts("");
+		}
+	 
+	 
+		 //print complement - not working
+	 for (int a = 0; a < length; a++)
+	 {
+			 printf("%d", ~storeBinary[a]);
+			
+	}
+	 
+	 
+	 
+		 
+		/*
+		 
+			 //fprintf(output, "%c", result);
+	
 	 puts("\n\n\n\n\n\n");
 	 
 	  //print complement of binary^
@@ -107,6 +132,7 @@ int main(int argc,  const char * argv[]) {
 		 }
 		 puts("");
 	 }
+		 */
 }
 
 
