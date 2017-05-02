@@ -10,14 +10,15 @@
 #include <stdlib.h>
 #include <strings.h>
 
+
 typedef unsigned  char Byte;
 
 void readFile(Byte* txtFile, FILE * output, unsigned long length,  const char * a);
 
 int main(int argc,  const char * argv[]) {
 	
-	FILE * fp = NULL;
-	FILE * output = NULL;
+	FILE * fp;
+	FILE * output;
 	Byte * txtFile = (Byte*)malloc(sizeof(Byte));
 	int i = 0;
 	unsigned long length = 0;
@@ -39,19 +40,28 @@ int main(int argc,  const char * argv[]) {
 			*(txtFile + i) = fgetc(fp);
 			i++;
 		}
-	
+		
+		
+		
+		length = strlen((char*)txtFile);
+		
+			//don't really need this to print
+		for (int a = 0; a < length; a++)
+		{
+			printf("%c", *(txtFile + a));
+		}
+		
+		readFile(txtFile, output, length, argv[2]);
+		
+		fclose(fp);
+		fclose(output);
 	}
 	
-	length = strlen((char*)txtFile);
-	for (int a = 0; a < length; a++) {
-		printf("%c", *(txtFile + a));
-	}
 	
-	readFile(txtFile, output, length, argv[2]);
+	
 	
 	free(txtFile);
-	fclose(output);
-	fclose(fp);
+	
 	return 0;
 }
 
@@ -61,7 +71,9 @@ int main(int argc,  const char * argv[]) {
 	 unsigned int mask = 1 << 31;
 	 //unsigned char mask = 0x80;
 	 unsigned int c;
-	 unsigned char * storeBytes;
+	 Byte storeBytes[length];
+	 unsigned int num = 0;
+	 Byte result;
 	
 	 for (int a = 0; a < length; a++)
 	 {
@@ -70,18 +82,18 @@ int main(int argc,  const char * argv[]) {
 		 
 		 for (int i = 0; i < 8; i++)
 		 {
-			 storeBytes[a] = putchar( c & mask ? '1' : '0');
+			 
+			 num = putchar( c & mask ? '1' : '0');
+			 storeBytes[a] = num;
 			 c <<= 1;
+			 
 		 }
-		 
-		 
-		 
-		
-		 fprintf(output, "%s", storeBytes);
-		
-		 puts("\n\n");
+		 puts("");
 	 }
 	 
+	 for (int m = 0; m < length; m++) {
+		 
+	 }
 	 
 }
 
