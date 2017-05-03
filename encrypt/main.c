@@ -71,7 +71,6 @@ int main(int argc,  const char * argv[]) {
  {
 	
 	 unsigned int mask = 1 << 31;
-	 Byte mask2 = 128;
 	 unsigned int c;
 	 Byte result = '\0';
 /*
@@ -98,7 +97,6 @@ int main(int argc,  const char * argv[]) {
 		 {
 			 result = *(txtFile + a) * (Byte)pow(2, 2);
 			 putchar( (result & (1 << s)) ? '1' : '0' );
-			 fprintf(output, "%c", ~result);
 		 }
 		 printf("%s", "------->");
 		 displayBits(~result, length, output);
@@ -110,14 +108,18 @@ int main(int argc,  const char * argv[]) {
 void displayBits(Byte value, unsigned long length, FILE * output)
 {
 	Byte mask = 1 << 7;
-		
-		for (int c = 0; c < 8; ++c) {
+	Byte fill[8 * length];
+	unsigned int x = 0;
+	
+	for (int c = 0; c < 8; ++c) {
 			putchar(value & mask ? '1' : '0');
 			value <<= 1;
 			
 		}
 	
-	fputs("\n", output);
+	if (<#condition#>) {
+		<#statements#>
+	}
 
 }
 
