@@ -15,6 +15,7 @@
 typedef unsigned  char Byte;
 
 void readFile(Byte* txtFile, FILE * output, unsigned long length,  const char * a);
+void displayBits(Byte value, unsigned long length, FILE * output);
 
 int main(int argc,  const char * argv[]) {
 	
@@ -57,10 +58,11 @@ int main(int argc,  const char * argv[]) {
 		readFile(txtFile, output, length, argv[2]);
 		
 		fclose(fp);
-		fclose(output);
+		
 	}
 	
 	free(txtFile);
+	
 	
 	return 0;
 }
@@ -69,13 +71,11 @@ int main(int argc,  const char * argv[]) {
  {
 	
 	 unsigned int mask = 1 << 31;
+	 Byte mask2 = 128;
 	 unsigned int c;
-	 unsigned int x;
-	 Byte storeBinary[length];
-	 Byte complement[length];
-	 Byte result;
-	 
-		//print characters in binary
+	 Byte result = '\0';
+/*
+	//print characters in binary
 	 for (int a = 0; a < length; a++)
 	 {
 		
@@ -86,53 +86,39 @@ int main(int argc,  const char * argv[]) {
 			putchar( c & mask ? '1' : '0');
 			c <<= 1;
 		}
-		 puts("");
+		 puts("\n\n");
 	}
-
+*/
+	
 		 //relocate bits
 	 for (int a = 0; a < length; a++)
 	 {
-		 result = *(txtFile + a) * (unsigned int)pow(2, 2) ;
-			
-
-			 result = *(txtFile + a) << 24;
-			 
-			 for (int i = 0; i < 8; i++)
-			 {
-				 storeBinary[a] = putchar( result & mask ? '1' : '0');
-				 result <<= 1;
-			 }
-			 puts("");
-		}
-	 
-	 
-		 //print complement - not working
-	 for (int a = 0; a < length; a++)
-	 {
-			 printf("%d", ~storeBinary[a]);
-			
-	}
-	 
-	 
-	 
 		 
-		/*
-		 
-			 //fprintf(output, "%c", result);
-	
-	 puts("\n\n\n\n\n\n");
-	 
-	  //print complement of binary^
-	 for (int a = 0; a < length; a++)
-	 {
-		 
-		 for (int i = 0; i < 8; i++)
+		 for (int s= 7; s >= 0; --s)
 		 {
-			 complement[a] = putchar(~storeBinary[i]);
+			 result = *(txtFile + a) * (Byte)pow(2, 2);
+			 putchar( (result & (1 << s)) ? '1' : '0' );
+			 fprintf(output, "%c", ~result);
 		 }
+		 printf("%s", "------->");
+		 displayBits(~result, length, output);
 		 puts("");
 	 }
-		 */
+	 fclose(output);
+ }
+	 
+void displayBits(Byte value, unsigned long length, FILE * output)
+{
+	Byte mask = 1 << 7;
+		
+		for (int c = 0; c < 8; ++c) {
+			putchar(value & mask ? '1' : '0');
+			value <<= 1;
+			
+		}
+	
+	fputs("\n", output);
+
 }
 
 
