@@ -73,7 +73,7 @@ int main(int argc,  const char * argv[]) {
 	 unsigned int mask = 1 << 31;
 	 unsigned int c;
 	 Byte result = '\0';
-/*
+
 	//print characters in binary
 	 for (int a = 0; a < length; a++)
 	 {
@@ -87,7 +87,7 @@ int main(int argc,  const char * argv[]) {
 		}
 		 puts("\n\n");
 	}
-*/
+
 	
 		 //relocate bits
 	 for (int a = 0; a < length; a++)
@@ -108,19 +108,13 @@ int main(int argc,  const char * argv[]) {
 void displayBits(Byte value, unsigned long length, FILE * output)
 {
 	Byte mask = 1 << 7;
-	Byte fill[8 * length];
-	unsigned int x = 0;
+	fprintf(output, "%c", value);
 	
 	for (int c = 0; c < 8; ++c) {
 			putchar(value & mask ? '1' : '0');
 			value <<= 1;
 			
 		}
-	
-	if (<#condition#>) {
-		<#statements#>
-	}
-
 }
 
 
